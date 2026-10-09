@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { basicSetup } from "codemirror";
-import { EditorView } from "@codemirror/view";
+import { EditorView, keymap } from "@codemirror/view";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorState } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
+import { indentWithTab } from "@codemirror/commands";
 
 interface Props {
   value: string;
@@ -26,6 +27,7 @@ export default function CodeEditor({ value, onChange, readOnly }: Props) {
         basicSetup,
         python(),
         oneDark,
+        keymap.of([indentWithTab]),
         EditorView.updateListener.of((u) => {
           if (u.docChanged) onChangeRef.current(u.state.doc.toString());
         }),

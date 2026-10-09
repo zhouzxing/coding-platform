@@ -22,7 +22,7 @@ def _submission_out(s: Submission) -> SubmissionOut:
         code=s.code, status=s.status, verdict=s.verdict,
         passed=s.passed, total=s.total, time_ms=s.time_ms, memory_kb=s.memory_kb,
         detail=json.loads(s.detail or "{}"),
-        created_at=s.created_at.isoformat() if s.created_at else "",
+        created_at=(s.created_at.isoformat() + "+00:00") if s.created_at else "",
     )
 
 

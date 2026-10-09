@@ -1,8 +1,10 @@
-"""Seed problems.json with a few classic easy/medium problems."""
+"""Seed problems.json with classic algorithm problems covering all major categories."""
 import json, os
 
 BASE = os.path.dirname(__file__)
+
 PROBLEMS = [
+  # ──────────────────────────── Array / Hash Map ────────────────────────────
   {
     "id": 1,
     "title": "Two Sum",
@@ -160,6 +162,976 @@ PROBLEMS = [
       {"input": {"nums": [-1,0,3,5,9,12], "target": 2}, "expected": -1},
       {"input": {"nums": [5], "target": 5}, "expected": 0},
       {"input": {"nums": [5], "target": 6}, "expected": -1},
+    ],
+  },
+  # ──────────────────────────── Hash Map / Set ────────────────────────────
+  {
+    "id": 7,
+    "title": "Contains Duplicate",
+    "difficulty": "Easy",
+    "accept_rate": 61.0,
+    "tags": ["Array", "Hash Set"],
+    "description": """## 题目
+
+给定一个整数数组 `nums`，如果数组中存在**重复元素**则返回 `True`，否则返回 `False`。
+
+## 示例
+
+**输入:** `nums = [1,2,3,1]`
+**输出:** `True`
+
+**输入:** `nums = [1,2,3,4]`
+**输出:** `False`
+""",
+    "signature": "def solve(nums: list[int]) -> bool:",
+    "test_cases": [
+      {"input": {"nums": [1,2,3,1]}, "expected": True},
+      {"input": {"nums": [1,2,3,4]}, "expected": False},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [1,1,1,1]}, "expected": True},
+      {"input": {"nums": [1]}, "expected": False},
+      {"input": {"nums": []}, "expected": False},
+      {"input": {"nums": [1,2,3,4,5,6,7,8,9,10,1]}, "expected": True},
+    ],
+  },
+  {
+    "id": 8,
+    "title": "Majority Element",
+    "difficulty": "Easy",
+    "accept_rate": 65.0,
+    "tags": ["Array", "Hash Map"],
+    "description": """## 题目
+
+给定一个大小为 `n` 的整数数组 `nums`，返回其中的**多数元素**（出现次数大于 `n/2` 的元素）。
+
+保证输入中一定存在多数元素。
+
+## 示例
+
+**输入:** `nums = [3,2,3]`
+**输出:** `3`
+
+**输入:** `nums = [2,2,1,1,1,2,2]`
+**输出:** `2`
+""",
+    "signature": "def solve(nums: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"nums": [3,2,3]}, "expected": 3},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [2,2,1,1,1,2,2]}, "expected": 2},
+      {"input": {"nums": [1]}, "expected": 1},
+      {"input": {"nums": [6,6,6,7,7]}, "expected": 6},
+    ],
+  },
+  {
+    "id": 9,
+    "title": "Group Anagrams",
+    "difficulty": "Medium",
+    "accept_rate": 54.0,
+    "tags": ["String", "Hash Map"],
+    "description": """## 题目
+
+给定一个字符串数组 `strs`，将**异位词**组合在一起。返回一个列表的列表，每个内层列表是一组异位词。
+
+输出顺序不重要，但同一组异位词必须在同一个内层列表中。
+
+## 示例
+
+**输入:** `strs = ["eat","tea","tan","ate","nat","bat"]`
+**输出:** `[["eat","tea","ate"],["tan","nat"],["bat"]]`（顺序不重要）
+""",
+    "signature": "def solve(strs: list[str]) -> list[list[str]]:",
+    "test_cases": [
+      {"input": {"strs": ["eat","tea","tan","ate","nat","bat"]}, "expected": [["bat"],["nat","tan"],["ate","eat","tea"]]},
+    ],
+    "hidden_tests": [
+      {"input": {"strs": [""]}, "expected": [[""]]},
+      {"input": {"strs": ["a"]}, "expected": [["a"]]},
+      {"input": {"strs": ["abc","cba","bac","def","fed"]}, "expected": [["abc","cba","bac"],["def","fed"]]},
+    ],
+  },
+  # ──────────────────────────── Two Pointers ────────────────────────────
+  {
+    "id": 10,
+    "title": "Valid Palindrome",
+    "difficulty": "Easy",
+    "accept_rate": 50.0,
+    "tags": ["String", "Two Pointers"],
+    "description": """## 题目
+
+给定一个字符串 `s`，验证它是否是**回文**（正序和反序读起来一样）。
+
+只考虑**字母和数字字符**，忽略大小写。空字符串视为有效回文。
+
+## 示例
+
+**输入:** `s = "A man, a plan, a canal: Panama"`
+**输出:** `True`
+
+**输入:** `s = "race a car"`
+**输出:** `False`
+""",
+    "signature": "def solve(s: str) -> bool:",
+    "test_cases": [
+      {"input": {"s": "A man, a plan, a canal: Panama"}, "expected": True},
+      {"input": {"s": "race a car"}, "expected": False},
+    ],
+    "hidden_tests": [
+      {"input": {"s": ""}, "expected": True},
+      {"input": {"s": " "}, "expected": True},
+      {"input": {"s": "0P"}, "expected": False},
+      {"input": {"s": "ab_a"}, "expected": True},
+    ],
+  },
+  {
+    "id": 11,
+    "title": "Container With Most Water",
+    "difficulty": "Medium",
+    "accept_rate": 54.0,
+    "tags": ["Array", "Two Pointers", "Greedy"],
+    "description": """## 题目
+
+给定一个长度为 `n` 的整数数组 `height`，表示竖直方向上有 `n` 条垂线的高度。
+
+找出其中的两条线，使得它们与 x 轴构成的容器可以容纳最多的水。返回容器最大容量（面积）。
+
+## 示例
+
+**输入:** `height = [1,8,6,2,5,4,8,3,7]`
+**输出:** `49`
+""",
+    "signature": "def solve(height: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"height": [1,8,6,2,5,4,8,3,7]}, "expected": 49},
+    ],
+    "hidden_tests": [
+      {"input": {"height": [1,1]}, "expected": 1},
+      {"input": {"height": [4,3,2,1,4]}, "expected": 16},
+      {"input": {"height": [1,2,1]}, "expected": 2},
+      {"input": {"height": [2,3,4,5,18,17,6]}, "expected": 17},
+    ],
+  },
+  # ──────────────────────────── Sliding Window ────────────────────────────
+  {
+    "id": 12,
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "Easy",
+    "accept_rate": 54.0,
+    "tags": ["Array", "Sliding Window"],
+    "description": """## 题目
+
+给定一个数组 `prices`，`prices[i]` 是第 `i` 天的股票价格。
+
+你只能选择**某一天买入**并在**之后的某一天卖出**，求能获得的最大利润。如果无法获利返回 `0`。
+
+## 示例
+
+**输入:** `prices = [7,1,5,3,6,4]`
+**输出:** `5`  // 第2天买入(价格1)，第5天卖出(价格6)，利润5
+
+**输入:** `prices = [7,6,4,3,1]`
+**输出:** `0`
+""",
+    "signature": "def solve(prices: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"prices": [7,1,5,3,6,4]}, "expected": 5},
+      {"input": {"prices": [7,6,4,3,1]}, "expected": 0},
+    ],
+    "hidden_tests": [
+      {"input": {"prices": [1,2]}, "expected": 1},
+      {"input": {"prices": [2,1]}, "expected": 0},
+      {"input": {"prices": [3,3,3,3]}, "expected": 0},
+      {"input": {"prices": [1,2,3,4,5,6]}, "expected": 5},
+    ],
+  },
+  {
+    "id": 13,
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "Medium",
+    "accept_rate": 33.0,
+    "tags": ["String", "Sliding Window", "Hash Map"],
+    "description": """## 题目
+
+给定一个字符串 `s`，找出其中**不含重复字符**的**最长子串**的长度。
+
+## 示例
+
+**输入:** `s = "abcabcbb"`
+**输出:** `3`  // 最长子串 "abc" 长度为3
+
+**输入:** `s = "bbbbb"`
+**输出:** `1`
+
+**输入:** `s = "pwwkew"`
+**输出:** `3`  // "wke"
+""",
+    "signature": "def solve(s: str) -> int:",
+    "test_cases": [
+      {"input": {"s": "abcabcbb"}, "expected": 3},
+      {"input": {"s": "bbbbb"}, "expected": 1},
+    ],
+    "hidden_tests": [
+      {"input": {"s": "pwwkew"}, "expected": 3},
+      {"input": {"s": ""}, "expected": 0},
+      {"input": {"s": " "}, "expected": 1},
+      {"input": {"s": "abcdefg"}, "expected": 7},
+      {"input": {"s": "dvdf"}, "expected": 3},
+    ],
+  },
+  # ──────────────────────────── Stack ────────────────────────────
+  {
+    "id": 14,
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "accept_rate": 40.0,
+    "tags": ["Stack", "String"],
+    "description": """## 题目
+
+给定一个只包含 `'('`, `')'`, `'{'`, `'}'`, `'['`, `']'` 的字符串 `s`，判断字符串是否**有效**。
+
+有效字符串需满足：
+1. 左括号必须用相同类型的右括号闭合
+2. 左括号必须以正确的顺序闭合
+3. 每个右括号都有对应的同类型左括号
+
+## 示例
+
+**输入:** `s = "()"`
+**输出:** `True`
+
+**输入:** `s = "()[]{}"`
+**输出:** `True`
+
+**输入:** `s = "(]"`
+**输出:** `False`
+""",
+    "signature": "def solve(s: str) -> bool:",
+    "test_cases": [
+      {"input": {"s": "()"}, "expected": True},
+      {"input": {"s": "()[]{}"}, "expected": True},
+      {"input": {"s": "(]"}, "expected": False},
+    ],
+    "hidden_tests": [
+      {"input": {"s": ""}, "expected": True},
+      {"input": {"s": "{[]}"}, "expected": True},
+      {"input": {"s": "([)]"}, "expected": False},
+      {"input": {"s": "(("}, "expected": False},
+    ],
+  },
+  # ──────────────────────────── Binary Search Variants ────────────────────────────
+  {
+    "id": 15,
+    "title": "Search Insert Position",
+    "difficulty": "Easy",
+    "accept_rate": 42.0,
+    "tags": ["Array", "Binary Search"],
+    "description": """## 题目
+
+给定一个**升序**排列的整数数组 `nums` 和一个目标值 `target`，返回 `target` 在数组中应插入的位置索引。
+
+如果 `target` 已存在于数组中，返回它的索引；否则返回它应该被插入的位置以保证数组仍然升序。
+
+要求时间复杂度 O(log n)。
+
+## 示例
+
+**输入:** `nums = [1,3,5,6], target = 5`
+**输出:** `2`
+
+**输入:** `nums = [1,3,5,6], target = 2`
+**输出:** `1`
+
+**输入:** `nums = [1,3,5,6], target = 7`
+**输出:** `4`
+""",
+    "signature": "def solve(nums: list[int], target: int) -> int:",
+    "test_cases": [
+      {"input": {"nums": [1,3,5,6], "target": 5}, "expected": 2},
+      {"input": {"nums": [1,3,5,6], "target": 2}, "expected": 1},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [1,3,5,6], "target": 7}, "expected": 4},
+      {"input": {"nums": [1,3,5,6], "target": 0}, "expected": 0},
+      {"input": {"nums": [1], "target": 1}, "expected": 0},
+      {"input": {"nums": [1], "target": 2}, "expected": 1},
+    ],
+  },
+  {
+    "id": 16,
+    "title": "Find First and Last Position of Element",
+    "difficulty": "Medium",
+    "accept_rate": 39.0,
+    "tags": ["Array", "Binary Search"],
+    "description": """## 题目
+
+给定一个**升序**排列的整数数组 `nums` 和一个目标值 `target`，找出 `target` 在数组中出现的**起始和结束位置** `[left, right]`。
+
+如果 `target` 不在数组中，返回 `[-1, -1]`。
+
+要求 O(log n) 时间复杂度。
+
+## 示例
+
+**输入:** `nums = [5,7,7,8,8,10], target = 8`
+**输出:** `[3,4]`
+
+**输入:** `nums = [5,7,7,8,8,10], target = 6`
+**输出:** `[-1,-1]`
+""",
+    "signature": "def solve(nums: list[int], target: int) -> list[int]:",
+    "test_cases": [
+      {"input": {"nums": [5,7,7,8,8,10], "target": 8}, "expected": [3,4]},
+      {"input": {"nums": [5,7,7,8,8,10], "target": 6}, "expected": [-1,-1]},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [], "target": 0}, "expected": [-1,-1]},
+      {"input": {"nums": [1], "target": 1}, "expected": [0,0]},
+      {"input": {"nums": [1,1,1,1,1], "target": 1}, "expected": [0,4]},
+    ],
+  },
+  # ──────────────────────────── Dynamic Programming ────────────────────────────
+  {
+    "id": 17,
+    "title": "Climbing Stairs",
+    "difficulty": "Easy",
+    "accept_rate": 50.0,
+    "tags": ["Dynamic Programming"],
+    "description": """## 题目
+
+你正在爬楼梯，需要 `n` 步才能到达楼顶。
+
+每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶？
+
+## 示例
+
+**输入:** `n = 2`
+**输出:** `2`  // 1+1 或 2
+
+**输入:** `n = 3`
+**输出:** `3`  // 1+1+1, 1+2, 2+1
+""",
+    "signature": "def solve(n: int) -> int:",
+    "test_cases": [
+      {"input": {"n": 2}, "expected": 2},
+      {"input": {"n": 3}, "expected": 3},
+    ],
+    "hidden_tests": [
+      {"input": {"n": 1}, "expected": 1},
+      {"input": {"n": 4}, "expected": 5},
+      {"input": {"n": 5}, "expected": 8},
+      {"input": {"n": 10}, "expected": 89},
+    ],
+  },
+  {
+    "id": 18,
+    "title": "House Robber",
+    "difficulty": "Medium",
+    "accept_rate": 48.0,
+    "tags": ["Dynamic Programming"],
+    "description": """## 题目
+
+你是一个专业小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金 `nums[i]`。
+
+**相邻**的房屋装有相互连通的防盗系统，如果两间相邻的房屋同一天被偷，系统会报警。
+
+给定一个非负整数数组 `nums`，计算在不触动报警的情况下，一夜之内能够偷窃到的最高金额。
+
+## 示例
+
+**输入:** `nums = [1,2,3,1]`
+**输出:** `4`  // 偷第1间(金额1) + 第3间(金额3) = 4
+
+**输入:** `nums = [2,7,9,3,1]`
+**输出:** `12`  // 偷第1,3,5间 = 2+9+1 = 12
+""",
+    "signature": "def solve(nums: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"nums": [1,2,3,1]}, "expected": 4},
+      {"input": {"nums": [2,7,9,3,1]}, "expected": 12},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": []}, "expected": 0},
+      {"input": {"nums": [5]}, "expected": 5},
+      {"input": {"nums": [2,1,1,2]}, "expected": 4},
+      {"input": {"nums": [10,1,1,10]}, "expected": 20},
+    ],
+  },
+  {
+    "id": 19,
+    "title": "Climb Stairs with Minimum Cost",
+    "difficulty": "Easy",
+    "accept_rate": 58.0,
+    "tags": ["Dynamic Programming", "Array"],
+    "description": """## 题目
+
+给定一个整数数组 `cost`，`cost[i]` 是从第 `i` 个台阶向上爬的体力花费。
+
+一旦支付了 `cost[i]`，你可以选择爬 1 或 2 个台阶。你可以从第 0 或第 1 个台阶开始。
+
+返回到达楼顶（数组末尾之外）的**最小花费**。
+
+## 示例
+
+**输入:** `cost = [10,15,20]`
+**输出:** `15`  // 从台阶1支付15后直接上两步到顶
+
+**输入:** `cost = [1,100,1,1,1,100,1,1,100,1]`
+**输出:** `6`
+""",
+    "signature": "def solve(cost: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"cost": [10,15,20]}, "expected": 15},
+    ],
+    "hidden_tests": [
+      {"input": {"cost": [1,100,1,1,1,100,1,1,100,1]}, "expected": 6},
+      {"input": {"cost": [1,2]}, "expected": 1},
+      {"input": {"cost": [5,5,5,5,5]}, "expected": 10},
+      {"input": {"cost": [0,0,0,0]}, "expected": 0},
+    ],
+  },
+  {
+    "id": 20,
+    "title": "Longest Palindromic Substring",
+    "difficulty": "Medium",
+    "accept_rate": 32.0,
+    "tags": ["String", "Dynamic Programming"],
+    "description": """## 题目
+
+给定一个字符串 `s`，找到其中**最长的回文子串**。
+
+## 示例
+
+**输入:** `s = "babad"`
+**输出:** `"bab"`  // 也可以是 "aba"
+
+**输入:** `s = "cbbd"`
+**输出:** `"bb"`
+""",
+    "signature": "def solve(s: str) -> str:",
+    "test_cases": [
+      {"input": {"s": "babad"}, "expected": "bab"},
+      {"input": {"s": "cbbd"}, "expected": "bb"},
+    ],
+    "hidden_tests": [
+      {"input": {"s": "a"}, "expected": "a"},
+      {"input": {"s": "ac"}, "expected": "a"},
+      {"input": {"s": "abacdfgdcaba"}, "expected": "aba"},
+      {"input": {"s": "aaaa"}, "expected": "aaaa"},
+    ],
+  },
+  # ──────────────────────────── Greedy ────────────────────────────
+  {
+    "id": 21,
+    "title": "Jump Game",
+    "difficulty": "Medium",
+    "accept_rate": 37.0,
+    "tags": ["Array", "Greedy"],
+    "description": """## 题目
+
+给定一个非负整数数组 `nums`，`nums[i]` 表示从第 `i` 个位置最多可以跳 `nums[i]` 步。
+
+判断是否能够从第 0 个位置跳到最后一个位置。返回 `True` 或 `False`。
+
+## 示例
+
+**输入:** `nums = [2,3,1,1,4]`
+**输出:** `True`
+
+**输入:** `nums = [3,2,1,0,4]`
+**输出:** `False`
+""",
+    "signature": "def solve(nums: list[int]) -> bool:",
+    "test_cases": [
+      {"input": {"nums": [2,3,1,1,4]}, "expected": True},
+      {"input": {"nums": [3,2,1,0,4]}, "expected": False},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [0]}, "expected": True},
+      {"input": {"nums": [2,0]}, "expected": True},
+      {"input": {"nums": [1,0,1,0]}, "expected": False},
+      {"input": {"nums": [2,0,0]}, "expected": True},
+    ],
+  },
+  # ──────────────────────────── Bit Manipulation ────────────────────────────
+  {
+    "id": 22,
+    "title": "Single Number",
+    "difficulty": "Easy",
+    "accept_rate": 65.0,
+    "tags": ["Bit Manipulation", "Array"],
+    "description": """## 题目
+
+给定一个非空整数数组 `nums`，除了某个元素只出现**一次**以外，其余每个元素均出现**两次**。
+
+找出那个只出现一次的元素。要求 O(n) 时间，O(1) 额外空间。
+
+## 示例
+
+**输入:** `nums = [2,2,1]`
+**输出:** `1`
+
+**输入:** `nums = [4,1,2,1,2]`
+**输出:** `4`
+""",
+    "signature": "def solve(nums: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"nums": [2,2,1]}, "expected": 1},
+      {"input": {"nums": [4,1,2,1,2]}, "expected": 4},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [1]}, "expected": 1},
+      {"input": {"nums": [0,0,99]}, "expected": 99},
+      {"input": {"nums": [-1,-1,-2]}, "expected": -2},
+    ],
+  },
+  {
+    "id": 23,
+    "title": "Missing Number",
+    "difficulty": "Easy",
+    "accept_rate": 60.0,
+    "tags": ["Bit Manipulation", "Array", "Math"],
+    "description": """## 题目
+
+给定一个包含 `[0, n]` 中 `n` 个数的数组 `nums`，找出 `[0, n]` 范围内**缺失的那个数字**。
+
+## 示例
+
+**输入:** `nums = [3,0,1]`
+**输出:** `2`
+
+**输入:** `nums = [0,1]`
+**输出:** `2`
+
+**输入:** `nums = [9,6,4,2,3,5,7,0,1]`
+**输出:** `8`
+""",
+    "signature": "def solve(nums: list[int]) -> int:",
+    "test_cases": [
+      {"input": {"nums": [3,0,1]}, "expected": 2},
+      {"input": {"nums": [0,1]}, "expected": 2},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [9,6,4,2,3,5,7,0,1]}, "expected": 8},
+      {"input": {"nums": [0]}, "expected": 1},
+      {"input": {"nums": [1]}, "expected": 0},
+    ],
+  },
+  # ──────────────────────────── Matrix ────────────────────────────
+  {
+    "id": 24,
+    "title": "Rotate Matrix",
+    "difficulty": "Medium",
+    "accept_rate": 63.0,
+    "tags": ["Array", "Matrix"],
+    "description": """## 题目
+
+给定一个 `n x n` 的二维整数矩阵 `matrix`，将其**顺时针旋转 90 度**，返回旋转后的矩阵。
+
+## 示例
+
+**输入:** `matrix = [[1,2,3],[4,5,6],[7,8,9]]`
+**输出:** `[[7,4,1],[8,5,2],[9,6,3]]`
+""",
+    "signature": "def solve(matrix: list[list[int]]) -> list[list[int]]:",
+    "test_cases": [
+      {"input": {"matrix": [[1,2,3],[4,5,6],[7,8,9]]}, "expected": [[7,4,1],[8,5,2],[9,6,3]]},
+    ],
+    "hidden_tests": [
+      {"input": {"matrix": [[1]]}, "expected": [[1]]},
+      {"input": {"matrix": [[1,2],[3,4]]}, "expected": [[3,1],[4,2]]},
+      {"input": {"matrix": [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]}, "expected": [[13,9,5,1],[14,10,6,2],[15,11,7,3],[16,12,8,4]]},
+    ],
+  },
+  {
+    "id": 25,
+    "title": "Set Matrix Zeroes",
+    "difficulty": "Medium",
+    "accept_rate": 44.0,
+    "tags": ["Array", "Matrix"],
+    "description": """## 题目
+
+给定一个 `m x n` 的整数矩阵 `matrix`，如果一个元素为 `0`，则将其所在行和列的所有元素都设为 `0`。返回处理后的矩阵。
+
+## 示例
+
+**输入:** `matrix = [[1,1,1],[1,0,1],[1,1,1]]`
+**输出:** `[[1,0,1],[0,0,0],[1,0,1]]`
+""",
+    "signature": "def solve(matrix: list[list[int]]) -> list[list[int]]:",
+    "test_cases": [
+      {"input": {"matrix": [[1,1,1],[1,0,1],[1,1,1]]}, "expected": [[1,0,1],[0,0,0],[1,0,1]]},
+    ],
+    "hidden_tests": [
+      {"input": {"matrix": [[0,1],[1,1]]}, "expected": [[0,0],[0,1]]},
+      {"input": {"matrix": [[1,2],[3,4]]}, "expected": [[1,2],[3,4]]},
+      {"input": {"matrix": [[0]]}, "expected": [[0]]},
+      {"input": {"matrix": [[1,0,1],[0,1,0],[1,1,1]]}, "expected": [[0,0,0],[0,0,0],[0,0,0]]},
+    ],
+  },
+  # ──────────────────────────── Math ────────────────────────────
+  {
+    "id": 26,
+    "title": "Plus One",
+    "difficulty": "Easy",
+    "accept_rate": 42.0,
+    "tags": ["Array", "Math"],
+    "description": """## 题目
+
+给定一个由整数组成的非空数组 `digits`，表示一个非负整数（高位在前）。将该整数加 `1`，返回结果数组。
+
+## 示例
+
+**输入:** `digits = [1,2,3]`
+**输出:** `[1,2,4]`
+
+**输入:** `digits = [9,9,9]`
+**输出:** `[1,0,0,0]`
+""",
+    "signature": "def solve(digits: list[int]) -> list[int]:",
+    "test_cases": [
+      {"input": {"digits": [1,2,3]}, "expected": [1,2,4]},
+      {"input": {"digits": [9,9,9]}, "expected": [1,0,0,0]},
+    ],
+    "hidden_tests": [
+      {"input": {"digits": [0]}, "expected": [1]},
+      {"input": {"digits": [1,0,0]}, "expected": [1,0,1]},
+      {"input": {"digits": [9]}, "expected": [1,0]},
+    ],
+  },
+  {
+    "id": 27,
+    "title": "Fizz Buzz",
+    "difficulty": "Easy",
+    "accept_rate": 70.0,
+    "tags": ["Math", "String"],
+    "description": """## 题目
+
+给定一个整数 `n`，返回从 `1` 到 `n` 的字符串列表：
+
+- 如果 `i` 是 3 的倍数，输出 `"Fizz"`
+- 如果 `i` 是 5 的倍数，输出 `"Buzz"`
+- 如果 `i` 同时是 3 和 5 的倍数，输出 `"FizzBuzz"`
+- 否则输出 `i` 的字符串形式
+
+## 示例
+
+**输入:** `n = 5`
+**输出:** `["1","2","Fizz","4","Buzz"]`
+""",
+    "signature": "def solve(n: int) -> list[str]:",
+    "test_cases": [
+      {"input": {"n": 5}, "expected": ["1","2","Fizz","4","Buzz"]},
+    ],
+    "hidden_tests": [
+      {"input": {"n": 15}, "expected": ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"]},
+      {"input": {"n": 1}, "expected": ["1"]},
+      {"input": {"n": 3}, "expected": ["1","2","Fizz"]},
+    ],
+  },
+  # ──────────────────────────── Tree (represented as array) ────────────────────────────
+  {
+    "id": 28,
+    "title": "Maximum Depth of Binary Tree",
+    "difficulty": "Easy",
+    "accept_rate": 70.0,
+    "tags": ["Tree", "DFS", "Binary Tree"],
+    "description": """## 题目
+
+给定一个列表 `root` 表示一棵**完全二叉树**的层序遍历序列（`None` 表示空节点）。
+
+返回这棵树的**最大深度**（根节点到最远叶子节点的路径上的节点数）。
+
+## 示例
+
+**输入:** `root = [3,9,20,None,None,15,7]`
+**输出:** `3`
+
+**输入:** `root = [1,None,2]`
+**输出:** `2`
+""",
+    "signature": "def solve(root: list) -> int:",
+    "test_cases": [
+      {"input": {"root": [3,9,20,None,None,15,7]}, "expected": 3},
+      {"input": {"root": [1,None,2]}, "expected": 2},
+    ],
+    "hidden_tests": [
+      {"input": {"root": []}, "expected": 0},
+      {"input": {"root": [1]}, "expected": 1},
+      {"input": {"root": [1,2,3,4,5]}, "expected": 3},
+    ],
+  },
+  {
+    "id": 29,
+    "title": "Invert Binary Tree",
+    "difficulty": "Easy",
+    "accept_rate": 72.0,
+    "tags": ["Tree", "DFS", "Binary Tree"],
+    "description": """## 题目
+
+给定一个列表 `root` 表示一棵二叉树的层序遍历序列（`None` 表示空节点）。
+
+**翻转**这棵树（每个节点的左右子树交换），返回翻转后的层序遍历序列。
+
+## 示例
+
+**输入:** `root = [4,2,7,1,3,6,9]`
+**输出:** `[4,7,2,9,6,3,1]`
+""",
+    "signature": "def solve(root: list) -> list:",
+    "test_cases": [
+      {"input": {"root": [4,2,7,1,3,6,9]}, "expected": [4,7,2,9,6,3,1]},
+    ],
+    "hidden_tests": [
+      {"input": {"root": []}, "expected": []},
+      {"input": {"root": [1]}, "expected": [1]},
+      {"input": {"root": [1,2]}, "expected": [1,None,2]},
+    ],
+  },
+  # ──────────────────────────── Backtracking ────────────────────────────
+  {
+    "id": 30,
+    "title": "Permutations",
+    "difficulty": "Medium",
+    "accept_rate": 75.0,
+    "tags": ["Backtracking", "Array"],
+    "description": """## 题目
+
+给定一个**不含重复数字**的整数数组 `nums`，返回它所有可能的**全排列**。
+
+返回一个列表的列表，每个内层列表是一种排列。排列顺序不重要，但必须包含所有可能的排列。
+
+## 示例
+
+**输入:** `nums = [1,2,3]`
+**输出:** `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`（顺序不重要）
+""",
+    "signature": "def solve(nums: list[int]) -> list[list[int]]:",
+    "test_cases": [
+      {"input": {"nums": [1,2,3]}, "expected": [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [1]}, "expected": [[1]]},
+      {"input": {"nums": [0,1]}, "expected": [[0,1],[1,0]]},
+      {"input": {"nums": [1,2]}, "expected": [[1,2],[2,1]]},
+    ],
+  },
+  {
+    "id": 31,
+    "title": "Subsets",
+    "difficulty": "Medium",
+    "accept_rate": 72.0,
+    "tags": ["Backtracking", "Bit Manipulation"],
+    "description": """## 题目
+
+给定一个**不含重复元素**的整数数组 `nums`，返回该数组所有可能的**子集**（幂集）。
+
+返回一个列表的列表，子集顺序不重要，但必须包含空集和全集。
+
+## 示例
+
+**输入:** `nums = [1,2,3]`
+**输出:** `[[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]`（顺序不重要）
+""",
+    "signature": "def solve(nums: list[int]) -> list[list[int]]:",
+    "test_cases": [
+      {"input": {"nums": [1,2,3]}, "expected": [[],[1],[2],[3],[1,2],[1,3],[2,3],[1,2,3]]},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": []}, "expected": [[]]},
+      {"input": {"nums": [0]}, "expected": [[],[0]]},
+      {"input": {"nums": [1,2]}, "expected": [[],[1],[2],[1,2]]},
+    ],
+  },
+  # ──────────────────────────── Interval ────────────────────────────
+  {
+    "id": 32,
+    "title": "Merge Intervals",
+    "difficulty": "Medium",
+    "accept_rate": 43.0,
+    "tags": ["Array", "Sorting"],
+    "description": """## 题目
+
+给定一个区间集合 `intervals`，其中 `intervals[i] = [start_i, end_i]`。
+
+合并所有**重叠**的区间，返回不重叠的区间列表。
+
+## 示例
+
+**输入:** `intervals = [[1,3],[2,6],[8,10],[15,18]]`
+**输出:** `[[1,6],[8,10],[15,18]]`
+
+**输入:** `intervals = [[1,4],[4,5]]`
+**输出:** `[[1,5]]`
+""",
+    "signature": "def solve(intervals: list[list[int]]) -> list[list[int]]:",
+    "test_cases": [
+      {"input": {"intervals": [[1,3],[2,6],[8,10],[15,18]]}, "expected": [[1,6],[8,10],[15,18]]},
+      {"input": {"intervals": [[1,4],[4,5]]}, "expected": [[1,5]]},
+    ],
+    "hidden_tests": [
+      {"input": {"intervals": []}, "expected": []},
+      {"input": {"intervals": [[1,4]]}, "expected": [[1,4]]},
+      {"input": {"intervals": [[1,4],[2,3]]}, "expected": [[1,4]]},
+      {"input": {"intervals": [[5,6],[1,2],[3,4]]}, "expected": [[1,2],[3,4],[5,6]]},
+    ],
+  },
+  # ──────────────────────────── Linked List (list-based) ────────────────────────────
+  {
+    "id": 33,
+    "title": "Linked List Cycle",
+    "difficulty": "Easy",
+    "accept_rate": 47.0,
+    "tags": ["Linked List", "Two Pointers"],
+    "description": """## 题目
+
+给定一个列表 `head` 表示链表的节点值序列，以及一个整数 `pos` 表示链表尾部连接到的位置索引（-1 表示无环）。
+
+判断链表中是否存在环。返回 `True` 或 `False`。
+
+## 示例
+
+**输入:** `head = [3,2,0,-4], pos = 1`
+**输出:** `True`  // 尾部连接到索引1
+
+**输入:** `head = [1,2], pos = -1`
+**输出:** `False`
+""",
+    "signature": "def solve(head: list[int], pos: int) -> bool:",
+    "test_cases": [
+      {"input": {"head": [3,2,0,-4], "pos": 1}, "expected": True},
+      {"input": {"head": [1,2], "pos": -1}, "expected": False},
+    ],
+    "hidden_tests": [
+      {"input": {"head": [1], "pos": -1}, "expected": False},
+      {"input": {"head": [1], "pos": 0}, "expected": True},
+      {"input": {"head": [1,2,3,4,5], "pos": 2}, "expected": True},
+    ],
+  },
+  {
+    "id": 34,
+    "title": "Merge Two Sorted Lists",
+    "difficulty": "Easy",
+    "accept_rate": 58.0,
+    "tags": ["Linked List", "Two Pointers"],
+    "description": """## 题目
+
+给定两个**升序排列**的整数列表 `list1` 和 `list2`，将它们合并为一个新的升序列表并返回。
+
+## 示例
+
+**输入:** `list1 = [1,2,4], list2 = [1,3,4]`
+**输出:** `[1,1,2,3,4,4]`
+
+**输入:** `list1 = [], list2 = []`
+**输出:** `[]`
+
+**输入:** `list1 = [], list2 = [0]`
+**输出:** `[0]`
+""",
+    "signature": "def solve(list1: list[int], list2: list[int]) -> list[int]:",
+    "test_cases": [
+      {"input": {"list1": [1,2,4], "list2": [1,3,4]}, "expected": [1,1,2,3,4,4]},
+      {"input": {"list1": [], "list2": []}, "expected": []},
+    ],
+    "hidden_tests": [
+      {"input": {"list1": [], "list2": [0]}, "expected": [0]},
+      {"input": {"list1": [1], "list2": []}, "expected": [1]},
+      {"input": {"list1": [1,5,9], "list2": [2,3,6]}, "expected": [1,2,3,5,6,9]},
+    ],
+  },
+  # ──────────────────────────── Heap / Sorting ────────────────────────────
+  {
+    "id": 35,
+    "title": "Top K Frequent Elements",
+    "difficulty": "Medium",
+    "accept_rate": 64.0,
+    "tags": ["Hash Map", "Heap", "Sorting"],
+    "description": """## 题目
+
+给定一个整数数组 `nums` 和一个整数 `k`，返回出现频率**前 k 高**的元素。
+
+返回顺序不重要，但必须包含频率最高的 `k` 个元素。
+
+## 示例
+
+**输入:** `nums = [1,1,1,2,2,3], k = 2`
+**输出:** `[1,2]`
+
+**输入:** `nums = [1], k = 1`
+**输出:** `[1]`
+""",
+    "signature": "def solve(nums: list[int], k: int) -> list[int]:",
+    "test_cases": [
+      {"input": {"nums": [1,1,1,2,2,3], "k": 2}, "expected": [1,2]},
+      {"input": {"nums": [1], "k": 1}, "expected": [1]},
+    ],
+    "hidden_tests": [
+      {"input": {"nums": [1,2,2,3,3,3], "k": 2}, "expected": [3,2]},
+      {"input": {"nums": [1,1,1,1], "k": 1}, "expected": [1]},
+      {"input": {"nums": [5,5,5,4,4,3], "k": 2}, "expected": [5,4]},
+    ],
+  },
+  # ──────────────────────────── Graph (as adjacency) ────────────────────────────
+  {
+    "id": 36,
+    "title": "Number of Islands",
+    "difficulty": "Medium",
+    "accept_rate": 48.0,
+    "tags": ["Graph", "DFS", "BFS", "Matrix"],
+    "description": """## 题目
+
+给定一个 `m x n` 的二维字符列表 `grid`，`'1'` 表示陆地，`'0'` 表示水。
+
+计算**岛屿的数量**（被水包围的连通陆地区域，上下左右连通算同一岛屿）。
+
+## 示例
+
+**输入:** `grid = [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]`
+**输出:** `1`
+
+**输入:** `grid = [["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]`
+**输出:** `3`
+""",
+    "signature": "def solve(grid: list[list[str]]) -> int:",
+    "test_cases": [
+      {"input": {"grid": [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]}, "expected": 1},
+      {"input": {"grid": [["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]}, "expected": 3},
+    ],
+    "hidden_tests": [
+      {"input": {"grid": [["1"]]}, "expected": 1},
+      {"input": {"grid": [["0"]]}, "expected": 0},
+      {"input": {"grid": [["1","0"],["0","1"]]}, "expected": 2},
+      {"input": {"grid": [["1","1"],["1","1"]]}, "expected": 1},
+    ],
+  },
+  # ──────────────────────────── Design ────────────────────────────
+  {
+    "id": 37,
+    "title": "Implement Queue using Stacks",
+    "difficulty": "Easy",
+    "accept_rate": 56.0,
+    "tags": ["Stack", "Design"],
+    "description": """## 题目
+
+使用栈（列表）实现一个队列。给定一系列操作，返回操作的结果列表。
+
+操作类型：`"push"`（入队），`"pop"`（出队并返回队首元素），`"peek"`（返回队首元素），`"empty"`（返回是否为空）。
+
+## 示例
+
+**输入:** `operations = ["push","push","peek","pop","empty"], values = [[1],[2],[],[],[]]`
+**输出:** `[1,1,False]`
+""",
+    "signature": "def solve(operations: list, values: list) -> list:",
+    "test_cases": [
+      {"input": {"operations": ["push","push","peek","pop","empty"], "values": [[1],[2],[],[],[]]}, "expected": [1,1,False]},
+    ],
+    "hidden_tests": [
+      {"input": {"operations": ["empty"], "values": [[]]}, "expected": [True]},
+      {"input": {"operations": ["push","pop","empty"], "values": [[5],[],[]]}, "expected": [5,True]},
+      {"input": {"operations": ["push","push","push","pop","pop","peek"], "values": [[1],[2],[3],[],[],[]]}, "expected": [1,2,3]},
     ],
   },
 ]
